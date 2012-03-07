@@ -1,0 +1,189 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01//EN" "http://www.w3.org/TR/html4/strict.dtd">
+<html><head>
+	<meta http-equiv="content-type" content="text/html; charset=UTF-8">
+	<title>Sample</title>
+	<link rel="stylesheet" href="index2_data/style2.css" type="text/css" media="screen">
+	<script type="text/javascript" src="Color%20Scheme%20Designer%203_files/jquery-1.js"></script>
+<script type="text/javascript">
+
+$(function(){
+
+	$(document).click( function(){ colorize() } );
+	colorize();
+
+	});
+
+
+var swapColors = true;
+function colorize() {
+
+	var Palette = top.ColorSchemeDesigner.getPalette();
+	swapColors = !swapColors;
+
+	var pri = [], sec1 = [], sec2 = [], compl = [];
+	for (var i=0;i<5;i++) {
+		pri[i] = Palette.Primary.Col[i].RGB.getCSS();
+		if (Palette.Compl) compl[i] = Palette.Compl.Col[i].RGB.getCSS();
+		if (Palette.Sec1) {
+			if (swapColors) {
+				sec1[i] = Palette.Sec2.Col[i].RGB.getCSS();
+				sec2[i] = Palette.Sec1.Col[i].RGB.getCSS();
+				}
+			else {
+				sec1[i] = Palette.Sec1.Col[i].RGB.getCSS();
+				sec2[i] = Palette.Sec2.Col[i].RGB.getCSS();
+				}
+			}
+		}		
+
+	var p0 = pri[0], p1 = pri[1], p2 = pri[2], p3 = pri[3], p4 = pri[4];
+
+	var c0, c1, c2;
+	if (Palette.Compl) { c0 = compl[0]; c1 = compl[4]; c2 = compl[2] }
+	else { c0 = p4; c1 = p2; c2 = p0 }
+
+	var sa0, sa1, sa2;
+	if (Palette.Sec1) { sa0 = sec1[0]; sa1 = sec1[4]; sa2 = sec1[2] }
+	else { sa0 = p4; sa1 = p2; sa2 = p0 }
+
+	var sb0, sb1, sb2;
+	if (Palette.Sec2) { sb0 = sec2[0]; sb1 = sec2[4]; sb2 = sec2[2] }
+	else { sb0 = p4; sb1 = p2; sb2 = p0 }
+
+
+	$('#topbg').css('background',p3).css('opacity',0.5);
+	$('#header').css('background',p3);
+	$('#hdr-box1').css('background',p1);
+	$('#hdr-box2').css('background',p2);
+	$('#hdr-box3').css('background',p0);
+	$('#hdr-box4').css('background',p4);
+
+	$('#menu a').not('.sel')
+	.mouseout(  function(){ $(this).css('background',sa1).css('color',sa2) } )
+	.mouseover( function(){ $(this).css('background',sa2).css('color',sa1) } ).trigger('mouseout');
+	$('#menu a.sel').css('background',sa2).css('color',sa1);
+	$('#menu a span').css('background',sa0);
+
+	$('#content').css('background','white');
+
+	$('#left').css('border-color',p4);
+	$('#content a')
+	.mouseout(  function(){ $(this).css('background','transparent').css('color',p0) } )
+	.mouseover( function(){ $(this).css('background',c2).css('color',c0) } ).trigger('mouseout');
+	$('#content .ttl').css('color',sb0);
+
+	$('#ico').css('background',p0);
+	$('#left ul').css('color',sb0);
+
+	$('#right h3 span').css('background',sb1).css('border-color',sb2);
+
+	$('#rbox').css('background',sb1).css('color',sb2);
+	$('#rbox span').css('background',sb0);
+
+	$('#right button').css('border-color',c1)
+	.mouseout(  function(){ $(this).css('background',c0).css('color',c2) } )
+	.mouseover(  function(){ $(this).css('background',c2).css('color',c0) } ).trigger('mouseout');
+	
+	$('#footer').css('background',sa1).css('color',sa2).css('border-color',sa0);
+	$('#footer a')
+	.mouseout(  function(){ $(this).css('background','transparent').css('color',sa2) } )
+	.mouseover( function(){ $(this).css('background',c2).css('color',c0) } ).trigger('mouseout');
+
+	}
+
+</script>
+
+<style type="text/css" id="css">
+</style>
+
+</head>
+<body>
+
+<div style="background: none repeat scroll 0% 0% rgb(101, 175, 154); opacity: 0.5;" id="topbg"></div>
+
+<div id="main">
+
+
+	<div style="background: none repeat scroll 0% 0% rgb(101, 175, 154);" id="header">
+		<div id="hdr-overlay"></div>
+		<div style="background: none repeat scroll 0% 0% rgb(41, 71, 62);" id="hdr-box1" class="box bg-pri-1"></div>
+		<div style="background: none repeat scroll 0% 0% rgb(13, 61, 48);" id="hdr-box2" class="box bg-pri-2"></div>
+		<div style="background: none repeat scroll 0% 0% rgb(41, 94, 80);" id="hdr-box3" class="box bg-pri-3"></div>
+		<div style="background: none repeat scroll 0% 0% rgb(121, 175, 160);" id="hdr-box4" class="box bg-pri-4"></div>
+		<h1>lorem ipsum</h1>
+		<h2>Duis aute irure dolor</h2>
+	</div>
+
+	<ul id="menu">
+		<li><a style="background: none repeat scroll 0% 0% rgb(15, 36, 61); color: rgb(125, 148, 175);" class="sel" href="#"><span style="background: none repeat scroll 0% 0% rgb(46, 68, 94);"></span>Lorem</a></li>
+		<li><a style="background: none repeat scroll 0% 0% rgb(125, 148, 175); color: rgb(15, 36, 61);" href="#"><span style="background: none repeat scroll 0% 0% rgb(46, 68, 94);"></span>Ipsum</a></li>
+		<li><a style="background: none repeat scroll 0% 0% rgb(125, 148, 175); color: rgb(15, 36, 61);" href="#"><span style="background: none repeat scroll 0% 0% rgb(46, 68, 94);"></span>Dolor</a></li>
+		<li><a style="background: none repeat scroll 0% 0% rgb(125, 148, 175); color: rgb(15, 36, 61);" href="#"><span style="background: none repeat scroll 0% 0% rgb(46, 68, 94);"></span>Sit amet</a></li>
+		<li><a style="background: none repeat scroll 0% 0% rgb(125, 148, 175); color: rgb(15, 36, 61);" href="#"><span style="background: none repeat scroll 0% 0% rgb(46, 68, 94);"></span>Aliquip</a></li>
+	</ul>
+
+	<div style="background: none repeat scroll 0% 0% white;" id="content">
+
+		<div style="border-color: rgb(121, 175, 160);" id="left">
+			<h3 style="color: rgb(144, 112, 63);" class="ttl">Mollit Anim</h3>
+			<p>Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor <a style="background: none repeat scroll 0% 0% transparent; color: rgb(41, 94, 80);" href="#">incididunt</a> ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis <a style="background: none repeat scroll 0% 0% transparent; color: rgb(41, 94, 80);" href="#">nostrud</a> exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat.
+			</p>
+			<dl>
+				<dt style="color: rgb(144, 112, 63);" class="ttl">Lorem</dt>
+				<dd>Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur.</dd>
+				<dt style="color: rgb(144, 112, 63);" class="ttl">Ipsum</dt>
+				<dd>Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.</dd>
+			</dl>
+			<img style="background: none repeat scroll 0% 0% rgb(41, 94, 80);" id="ico" src="index2_data/l.png">
+			<h4>Duis aute irure dolor</h4>
+			<ul style="color: rgb(144, 112, 63);">
+				<li><a style="background: none repeat scroll 0% 0% transparent; color: rgb(41, 94, 80);" href="#">Lorem ipsum</a></li>
+				<li><a style="background: none repeat scroll 0% 0% transparent; color: rgb(41, 94, 80);" href="#">Dolor sit amet</a></li>
+				<li><a style="background: none repeat scroll 0% 0% transparent; color: rgb(41, 94, 80);" href="#">Consectetur adipisicing</a></li>
+			</ul>
+		</div>
+
+		<div id="right">
+			<h3 style="color: rgb(144, 112, 63);" class="ttl"><span style="background: none repeat scroll 0% 0% rgb(199, 176, 138); border-color: rgb(93, 65, 21);"></span>Lorem ipsum dolor sit amet</h3>
+			<img class="photo" src="index2_data/photo1.jpg">
+			<h4>Duis aute</h4>
+			<p>Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ullamco laboris nisi ut aliquip.
+			</p>
+			<p class="link"><a style="background: none repeat scroll 0% 0% transparent; color: rgb(41, 94, 80);" href="#">Ut labore… »</a></p>
+
+			<h3 style="color: rgb(144, 112, 63);" class="ttl"><span style="background: none repeat scroll 0% 0% rgb(199, 176, 138); border-color: rgb(93, 65, 21);"></span>Excepteur sint occaecat</h3>
+			<p>Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ullamco.
+			</p>
+			
+			<div style="background: none repeat scroll 0% 0% rgb(199, 176, 138); color: rgb(93, 65, 21);" id="rbox">
+			<span style="background: none repeat scroll 0% 0% rgb(144, 112, 63);"></span>Adipisicing elit, sed do eiusmod tempor sunt in culpa qui officia.
+			</div>
+			
+			<button style="border-color: rgb(199, 160, 138); background: none repeat scroll 0% 0% rgb(144, 92, 63); color: rgb(93, 47, 21);" type="button">Deserunt »</button>
+
+			<div class="cleaner"></div>
+
+			<img class="photo" src="index2_data/photo2.jpg">
+			<h4>Duis aute</h4>
+			<p>Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ullamco laboris nisi ut aliquip.
+			</p>
+			<p class="link"><a style="background: none repeat scroll 0% 0% transparent; color: rgb(41, 94, 80);" href="#">Ut labore… »</a></p>
+		</div>
+
+		<div class="cleaner"></div>
+
+		<div style="background: none repeat scroll 0% 0% rgb(125, 148, 175); color: rgb(15, 36, 61); border-color: rgb(46, 68, 94);" id="footer">
+			<a style="background: none repeat scroll 0% 0% transparent; color: rgb(15, 36, 61);" href="#">Lorem</a> |
+			<a style="background: none repeat scroll 0% 0% transparent; color: rgb(15, 36, 61);" href="#">Ipsum</a> |
+			<a style="background: none repeat scroll 0% 0% transparent; color: rgb(15, 36, 61);" href="#">Dolor</a> |
+			<a style="background: none repeat scroll 0% 0% transparent; color: rgb(15, 36, 61);" href="#">Sit amet</a> |
+			<a style="background: none repeat scroll 0% 0% transparent; color: rgb(15, 36, 61);" href="#">Aliquip</a>
+		</div>
+
+
+	</div>
+
+</div>
+
+
+</body></html>

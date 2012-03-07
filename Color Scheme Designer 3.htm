@@ -1,0 +1,232 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01//EN" "http://www.w3.org/TR/html4/strict.dtd">
+<html lang="en"><!--
+
+*  Color Scheme Designer 3
+
+*  Copyright (c) 2002-2009, Petr Stanicek, pixy@pixy.cz ("the author")
+*  All rights reserved.
+*
+*  Redistribution and use in source and binary forms, with or without
+*  modification, are permitted provided that the following conditions are met:
+*   * Redistributions of source code must retain the above copyright
+*     notice, this list of conditions and the following disclaimer.
+*   * Redistributions in binary form must reproduce the above copyright
+*     notice, this list of conditions and the following disclaimer in the
+*     documentation and/or other materials provided with the distribution.
+*   * Any commercial use of this software is not allowed unless an exemption
+*     was granted by the author.
+*
+*  This software is provided by the author "as is" and any express or implied
+*  warranties, including, but not limited to, the implied warranties or
+*  merchantability and fitness for a particular purpose are disclaimed.
+*  In no event shall the author be liable for any direct, indirect, incidental,
+*  special, exemplary, or consequential damages (including, but not limited to,
+*  procurement of substitute goods or services; loss of use, data, or profits;
+*  or business interruption) however caused and on any theory of liability,
+*  whether in contract, strict liability, or tort (including negligence or
+*  otherwise) arising in any way out of the use of this software, even if
+*  advised of the possibility of such damage.
+
+--><head>
+	<meta http-equiv="content-type" content="text/html; charset=UTF-8">
+	<title>Color Scheme Designer 3</title>
+	<meta name="description" content="A designer tool for creating color combinations that work together well.">
+	<meta name="keywords" content="color, scheme, wheel, theory, colorwheel, design, designer, palette, colorset, RYB, webcolors, safecolors, blind, blindness, simulation, protanopy, protanopia, deuteranopy, deuteranopia, tritanopy, tritanopia, daltonism, live, preview, pixy, barvy, barevné, míchátko">
+	<link rel="stylesheet" href="Color%20Scheme%20Designer%203_files/default.css" type="text/css">
+	<script type="text/javascript" src="Color%20Scheme%20Designer%203_files/jquery-1.js"></script>
+	<script type="text/javascript" src="Color%20Scheme%20Designer%203_files/jquery_003.js"></script>
+	<script type="text/javascript" src="Color%20Scheme%20Designer%203_files/jquery.js"></script>
+	<script type="text/javascript" src="Color%20Scheme%20Designer%203_files/jquery_002.js"></script>
+	<script type="text/javascript" src="Color%20Scheme%20Designer%203_files/jquery_004.js"></script>
+	<script type="text/javascript" src="Color%20Scheme%20Designer%203_files/colorschemedesigner.js"></script>
+	<script type="text/javascript" src="Color%20Scheme%20Designer%203_files/tooltips.js"></script>
+
+</head>
+
+<body>
+
+<div style="display: none;" id="csd3-jscheck">
+	<h1>Color Scheme Designer 3</h1>
+	<div id="csd3-load"><p>Wait please. Loading...</p></div>
+</div>
+
+<script type="text/javascript">
+<!--
+
+var elm = document.getElementById('csd3-load');
+if (elm) elm.innerHTML = '<p>Wait please. Loading...<'+'/p>';
+
+//-->
+</script>
+
+<div id="csd3-canvas" style="">
+
+	<h2>2002–2010 © <a href="http://www.pixy.cz/index-en.html">Petr Stanicek</a> • v3.51 • <a class="hilite" href="http://colorschemedesigner.com/blog"><strong>Blog &amp; News</strong></a></h2>
+
+	<div id="csd3-model-cover"><table id="csd3-model"><tbody><tr><td><a id="csd3-m1" class="" href="#">mono</a></td><td><a class="" id="csd3-m2" href="#">complement</a></td><td><a class="" id="csd3-m3" href="#">triad</a></td><td><a class="sel" id="csd3-m4" href="#">tetrad</a></td><td><a class="" id="csd3-m5" href="#">analogic</a></td><td><a id="csd3-m6" href="#">accented analogic</a></td></tr></tbody></table></div>
+
+	<div style="display: none;" id="csd3-pane-wheel" class="pane"><div id="csd3-wheel"><div style="background-color: rgb(41, 94, 80);" id="csd3-sample" class="bg-pri-0"></div><div id="csd3-wh1"></div><div id="csd3-wh2"></div><div id="csd3-wh3"></div><div id="csd3-wh4"></div><img style="left: 144px; top: 285px;" class="dot" id="csd3-dot1" src="Color%20Scheme%20Designer%203_files/e.png"><img style="display: none; left: 94px; top: 246px;" class="dot" id="csd3-dot2" src="Color%20Scheme%20Designer%203_files/e.png"><img style="display: block; left: 268px; top: 114px;" class="dot" id="csd3-dot3" src="Color%20Scheme%20Designer%203_files/e.png"><img style="display: block; left: 166px; top: 75px;" class="dot" id="csd3-dot4" src="Color%20Scheme%20Designer%203_files/e.png"><div class="val" id="csd3-hue-val">Hue: <span>201°</span></div><div class="val" id="csd3-hue-compl">opposite</div><div style="display: block;" class="val" id="csd3-dist-val">Angle: <span>30°</span></div><div class="val" id="csd3-rgb-val">RGB: <span>295E50</span></div><table id="csd3-rgb-parts"><tbody><tr><th>R:</th><td id="csd3-rgb-r">16 %</td></tr><tr><th>G:</th><td id="csd3-rgb-g">37 %</td></tr><tr><th>B:</th><td id="csd3-rgb-b">31 %</td></tr></tbody></table></div></div>
+
+	<div style="display: none;" id="csd3-pane-vars" class="pane">
+		<div class="tabs" id="csd3-tabs-csv"><a id="csd3-tab-c1" class="sel" href="#">Palette At Once</a><a id="csd3-tab-c2" href="#">Adjust Variants</a></div>
+		<div style="display: block;" id="csd3-c1-cover"><div id="csd3-saturation-cover"><h4>Scheme<br>Saturation/Brightness</h4><div style="background-color: rgb(0, 167, 121);" id="csd3-saturation"><div class="slider"><img style="left: 89.5px; top: 90px;" class="dot" id="csd3-dots" src="Color%20Scheme%20Designer%203_files/e.png"></div></div></div><div id="csd3-contrast-cover"><h4>Scheme<br>Contrast</h4><div id="csd3-contrast" class="slider"><img style="left: 89.0168px; top: 90.9832px;" class="dot" id="csd3-dotc" src="Color%20Scheme%20Designer%203_files/e.png"></div></div></div>
+		<div id="csd3-c2-cover"><div id="csd3-manvar-cover"><h4>Selected Variant<br>Saturation/Brightness</h4><div id="csd3-manvar"><div class="slider"><img class="dotv" id="csd3-dotv0" src="Color%20Scheme%20Designer%203_files/e.png"><img class="dotv" id="csd3-dotv1" src="Color%20Scheme%20Designer%203_files/e.png"><img class="dotv" id="csd3-dotv2" src="Color%20Scheme%20Designer%203_files/e.png"><img class="dotv" id="csd3-dotv3" src="Color%20Scheme%20Designer%203_files/e.png"><img class="dotv" id="csd3-dotv4" src="Color%20Scheme%20Designer%203_files/e.png"></div></div><div id="csd3-manvar-list"></div></div></div>
+	<div id="csd3-presets">Preset: <span style="display: inline-block; position: relative; top: 0px; left: 0px; z-index: 0; vertical-align: middle; text-align: left; width: 255px;" class="select-replace-cover"><select style="opacity: 0; visibility: visible; position: absolute; top: 0px; left: 0px; display: inline; z-index: 1;"><option selected="selected" value="">- custom -</option><option value="default">Default scheme</option><option value="hcontrast1">More Contrast</option><option value="hcontrast2">High Contrast</option><option value="hcontrast3">Max Contrast</option><option value="lcontrast1">Less Contrast</option><option value="lcontrast2">Low Contrast</option><option value="lcontrast3">Min Contrast</option><option value="msatur">Medium Dark (saturated)</option><option value="dsatur">Dark (saturated)</option><option value="vdsatur">Very Dark (saturated)</option><option value="pastel">Pastel</option><option value="mpastel">Medium Dark Pastel</option><option value="dpastel">Dark Pastel</option><option value="vdpastel">Very Dark Pastel</option><option value="palepastel">Light Pale Pastel</option><option value="mpalepastel">Medium Pale Pastel</option><option value="dpalepastel">Dark Pale Pastel</option><option value="vdpalepastel">Very Dark Pale Pastel</option><option value="lgray">Almost Grays (light)</option><option value="lagray">Almost Grays with Color Accents (light)</option><option value="mgray">Almost Grays (medium)</option><option value="magray">Almost Grays with Color Accents (medium)</option><option value="dgray">Almost Grays (dark)</option><option value="dagray">Almost Grays with Color Accents (dark)</option></select><span style="display: block; white-space: nowrap;" class="select-replace">- custom -</span></span></div></div>
+
+	<div style="display: block;" id="csd3-pane-info" class="pane"><div id="csd3-coltable"><h4>Primary Color:</h4><table class="info-table"><tbody><tr><td style="background-color: rgb(41, 94, 80);" class="cbox bg-pri-0"></td><td style="background-color: rgb(41, 71, 62);" class="cbox bg-pri-1"></td><td style="background-color: rgb(13, 61, 48);" class="cbox bg-pri-2"></td><td style="background-color: rgb(101, 175, 154);" class="cbox bg-pri-3"></td><td style="background-color: rgb(121, 175, 160);" class="cbox bg-pri-4"></td></tr><tr><td class="code">295E50</td><td class="code">29473E</td><td class="code">0D3D30</td><td class="code">65AF9A</td><td class="code">79AFA0</td></tr></tbody></table><h4>Secondary Color A:</h4><table class="info-table"><tbody><tr><td style="background-color: rgb(46, 68, 94);" class="cbox bg-sec1-0"></td><td style="background-color: rgb(43, 56, 71);" class="cbox bg-sec1-1"></td><td style="background-color: rgb(15, 36, 61);" class="cbox bg-sec1-2"></td><td style="background-color: rgb(107, 138, 175);" class="cbox bg-sec1-3"></td><td style="background-color: rgb(125, 148, 175);" class="cbox bg-sec1-4"></td></tr><tr><td class="code">2E445E</td><td class="code">2B3847</td><td class="code">0F243D</td><td class="code">6B8AAF</td><td class="code">7D94AF</td></tr></tbody></table><h4>Secondary Color B:</h4><table class="info-table"><tbody><tr><td style="background-color: rgb(144, 112, 63);" class="cbox bg-sec2-0"></td><td style="background-color: rgb(108, 90, 63);" class="cbox bg-sec2-1"></td><td style="background-color: rgb(93, 65, 21);" class="cbox bg-sec2-2"></td><td style="background-color: rgb(199, 167, 116);" class="cbox bg-sec2-3"></td><td style="background-color: rgb(199, 176, 138);" class="cbox bg-sec2-4"></td></tr><tr><td class="code">90703F</td><td class="code">6C5A3F</td><td class="code">5D4115</td><td class="code">C7A774</td><td class="code">C7B08A</td></tr></tbody></table><h4>Complementary Color:</h4><table class="info-table"><tbody><tr><td style="background-color: rgb(144, 92, 63);" class="cbox bg-compl-0"></td><td style="background-color: rgb(108, 79, 63);" class="cbox bg-compl-1"></td><td style="background-color: rgb(93, 47, 21);" class="cbox bg-compl-2"></td><td style="background-color: rgb(199, 146, 116);" class="cbox bg-compl-3"></td><td style="background-color: rgb(199, 160, 138);" class="cbox bg-compl-4"></td></tr><tr><td class="code">905C3F</td><td class="code">6C4F3F</td><td class="code">5D2F15</td><td class="code">C79274</td><td class="code">C7A08A</td></tr></tbody></table></div></div>
+
+	<div class="tabs" id="csd3-tabs-color"><a class="" id="csd3-tab-wheel" href="#">Hues</a><a class="" id="csd3-tab-vars" href="#">Adjust Scheme</a><a class="sel" id="csd3-tab-info" href="#">Color List</a></div>
+
+	<table id="csd3-palette"><tbody><tr>
+		<td style="background-color: rgb(41, 94, 80);" class="cbox bg-pri-0"></td>
+		<td style="background-color: rgb(46, 68, 94);" class="cbox bg-sec1-0"></td>
+		<td style="background-color: rgb(144, 112, 63);" class="cbox bg-sec2-0"></td>
+		<td style="background-color: rgb(144, 92, 63);" class="cbox bg-compl-0"></td>
+	</tr></tbody></table>
+
+	<h4 id="csd3-schemeid">Scheme ID: <a href="http://colorschemedesigner.com/#3941ThVi2w0w0" target="_blank">3941ThVi2w0w0</a></h4>
+
+	<div class="scheme-m4" id="csd3-preview-palette-canvas">
+		<div id="csd3-preview-palette-bg1"></div>
+		<div id="csd3-preview-palette-bg2"></div>	
+		<table id="csd3-preview-palette">
+		<tbody><tr class="pri">
+			<td style="background-color: rgb(101, 175, 154);" class="cbox bg-pri-3" rel="pri-3"></td>
+			<td style="background-color: rgb(41, 94, 80);" class="cbox bg-pri-0" rel="pri-0" rowspan="2"></td>
+			<td style="background-color: rgb(41, 71, 62);" class="cbox bg-pri-1" rel="pri-1"></td>
+		</tr>
+		<tr class="pri">
+			<td style="background-color: rgb(121, 175, 160);" class="cbox bg-pri-4" rel="pri-4"></td>
+			<td style="background-color: rgb(13, 61, 48);" class="cbox bg-pri-2" rel="pri-2"></td>
+		</tr>
+		<tr class="sec sec1">
+			<td style="background-color: rgb(43, 56, 71);" class="cbox bg-sec1-1" rel="sec1-1"></td>
+			<td style="background-color: rgb(46, 68, 94);" class="cbox bg-sec1-0" rel="sec1-0" rowspan="2"></td>
+			<td style="background-color: rgb(107, 138, 175);" class="cbox bg-sec1-3" rel="sec1-3"></td>
+		</tr>
+		<tr class="sec sec1">
+			<td style="background-color: rgb(15, 36, 61);" class="cbox bg-sec1-2" rel="sec1-2"></td>
+			<td style="background-color: rgb(125, 148, 175);" class="cbox bg-sec1-4" rel="sec1-4"></td>
+		</tr>
+		<tr class="sec sec2">
+			<td style="background-color: rgb(108, 90, 63);" class="cbox bg-sec2-1" rel="sec2-1"></td>
+			<td style="background-color: rgb(144, 112, 63);" class="cbox bg-sec2-0" rel="sec2-0" rowspan="2"></td>
+			<td style="background-color: rgb(199, 167, 116);" class="cbox bg-sec2-3" rel="sec2-3"></td>
+		</tr>
+		<tr class="sec sec2">
+			<td style="background-color: rgb(93, 65, 21);" class="cbox bg-sec2-2" rel="sec2-2"></td>
+			<td style="background-color: rgb(199, 176, 138);" class="cbox bg-sec2-4" rel="sec2-4"></td>
+		</tr>
+		<tr class="compl">
+			<td style="background-color: rgb(108, 79, 63);" class="cbox bg-compl-1" rel="compl-1"></td>
+			<td style="background-color: rgb(144, 92, 63);" class="cbox bg-compl-0" rel="compl-0" rowspan="2"></td>
+			<td style="background-color: rgb(199, 146, 116);" class="cbox bg-compl-3" rel="compl-3"></td>
+		</tr>
+		<tr class="compl">
+			<td style="background-color: rgb(93, 47, 21);" class="cbox bg-compl-2" rel="compl-2"></td>
+			<td style="background-color: rgb(199, 160, 138);" class="cbox bg-compl-4" rel="compl-4"></td>
+		</tr>
+
+		</tbody></table>
+
+	</div>
+
+	<div class="tabs" id="csd3-tabs-preview"><a id="csd3-tab-preview0" class="sel" href="#">Preview</a><a id="csd3-tab-preview1" href="#">Light page example</a><a id="csd3-tab-preview2" href="#">Dark page example</a></div>
+
+	<div id="csd3-showtext">
+		<a id="csd3-showtext-btn" href="#">Show sample text</a>
+	</div>
+
+	<ul id="csd3-menu" class="">
+		<li><a href="#" id="csd3-menu-undo" class="">Undo</a></li>
+		<li class=""><a href="#" id="csd3-menu-redo" class="disabled">Redo</a></li>
+		<li class=""><a class="" id="csd3-menu-random" href="#">Random</a>
+			<ul style="z-index: 1027; display: none;">
+				<li class=""><a class="" href="#" id="csd3-menu-random-now">Randomize Palette</a></li>
+				<li class=""><a class="" href="#" id="csd3-menu-random-set">Randomization Settings…</a></li>
+			</ul>
+		</li>
+		<li class=""><a class="" href="#" id="csd3-menu-vision">Colorblind</a>
+			<ul style="z-index: 1024; display: none;" id="csd3-submenu-vision"><li class=""><a class="vision-cb0 sel" href="#" rel="0">Normal vision (cca 85.5 % of population)</a></li><li class="sep"><hr></li><li class=""><a class="vision-cb1" href="#" rel="1">Protanopy (1 % of men)</a></li><li class=""><a class="vision-cb2" href="#" rel="2">Deuteranopy (1 % of men)</a></li><li class=""><a class="vision-cb3" href="#" rel="3">Tritanopy (cca 0,003 % of population)</a></li><li class=""><a class="vision-cb4" href="#" rel="4">Protanomaly (1 % of men)</a></li><li><a class="vision-cb5" href="#" rel="5">Deuteranomaly (5 % of men, 0.4 % of women)</a></li><li><a class="vision-cb6" href="#" rel="6">Tritanomaly (almost 0 %)</a></li><li><a class="vision-cb7" href="#" rel="7">Full colorblindness (0,005% of population)</a></li><li><a class="vision-cb8" href="#" rel="8">Atypical monochromatism</a></li></ul>
+		</li>
+		<li class=""><a class="" href="#" id="csd3-menu-convert">Color space</a>
+			<ul style="z-index: 1018; display: none;" id="csd3-submenu-convert">
+				<li class=""><a id="csd3-menu-convert-0" class="sel" href="#">RGB Colors (default)</a></li>
+				<li class="sep"><hr></li>
+				<li class=""><a class="" id="csd3-menu-convert-1" href="#">Web Colors</a></li>
+				<li><a id="csd3-menu-convert-2" href="#" class="disabled">PANTONE™ Colors</a></li>
+				<li><a id="csd3-menu-convert-3" href="#" class="disabled">RAL™ Colors</a></li>
+				<li><a id="csd3-menu-convert-4" href="#">Opaltone® Colors</a></li>
+			</ul>
+		</li>
+		<li class=""><a class="" id="csd3-menu-export" href="#">Export</a>
+			<ul style="z-index: 1026; display: none;">
+				<li class=""><a class="" id="csd3-menu-export-html" href="#">HTML+CSS…</a></li>
+				<li class=""><a class="" id="csd3-menu-export-xml" href="#">XML…</a></li>
+				<li class=""><a class="" id="csd3-menu-export-txt" href="#">Text…</a></li>
+				<li class=""><a class="" id="csd3-menu-export-aco" href="#">ACO (Photoshop palette)…</a></li>
+				<li class=""><a class="" id="csd3-menu-export-gpl" href="#">GPL (GIMP palette)…</a></li>
+			</ul>
+		</li>
+		<li><a href="#" id="csd3-menu-help">Help</a>
+			<ul>
+				<li><a href="#" id="csd3-menu-tooltips">Show Tooltips</a></li>
+				<li><a href="http://shop.colorschemedesigner.com/" class="link">Instant Designer Shop…</a></li>
+				<li class="sep"><hr></li>
+				<li><a href="http://colorschemedesigner.com/previous" id="csd3-menu-about">About…</a></li>
+			</ul>
+		</li>
+	</ul>
+
+
+	<form target="_blank" method="POST" action="http://colorschemedesigner.com/export/" id="csd3-form"><input value="{&quot;type&quot;:&quot;gpl&quot;,&quot;id&quot;:&quot;3941ThVi2w0w0&quot;,&quot;colorspace&quot;:&quot;RGB&quot;,&quot;colorspaceinfo&quot;:&quot;&quot;,&quot;scheme&quot;:{&quot;primary&quot;:{&quot;ttl&quot;:&quot;Primary Color&quot;,&quot;col&quot;:[{&quot;hex&quot;:&quot;295E50&quot;,&quot;r&quot;:41,&quot;g&quot;:94,&quot;b&quot;:80,&quot;name&quot;:[]},{&quot;hex&quot;:&quot;29473E&quot;,&quot;r&quot;:41,&quot;g&quot;:71,&quot;b&quot;:62,&quot;name&quot;:[]},{&quot;hex&quot;:&quot;0D3D30&quot;,&quot;r&quot;:13,&quot;g&quot;:61,&quot;b&quot;:48,&quot;name&quot;:[]},{&quot;hex&quot;:&quot;65AF9A&quot;,&quot;r&quot;:101,&quot;g&quot;:175,&quot;b&quot;:154,&quot;name&quot;:[]},{&quot;hex&quot;:&quot;79AFA0&quot;,&quot;r&quot;:121,&quot;g&quot;:175,&quot;b&quot;:160,&quot;name&quot;:[]}]},&quot;secondary-a&quot;:{&quot;ttl&quot;:&quot;Secondary Color A&quot;,&quot;col&quot;:[{&quot;hex&quot;:&quot;2E445E&quot;,&quot;r&quot;:46,&quot;g&quot;:68,&quot;b&quot;:94,&quot;name&quot;:[]},{&quot;hex&quot;:&quot;2B3847&quot;,&quot;r&quot;:43,&quot;g&quot;:56,&quot;b&quot;:71,&quot;name&quot;:[]},{&quot;hex&quot;:&quot;0F243D&quot;,&quot;r&quot;:15,&quot;g&quot;:36,&quot;b&quot;:61,&quot;name&quot;:[]},{&quot;hex&quot;:&quot;6B8AAF&quot;,&quot;r&quot;:107,&quot;g&quot;:138,&quot;b&quot;:175,&quot;name&quot;:[]},{&quot;hex&quot;:&quot;7D94AF&quot;,&quot;r&quot;:125,&quot;g&quot;:148,&quot;b&quot;:175,&quot;name&quot;:[]}]},&quot;secondary-b&quot;:{&quot;ttl&quot;:&quot;Secondary Color B&quot;,&quot;col&quot;:[{&quot;hex&quot;:&quot;90703F&quot;,&quot;r&quot;:144,&quot;g&quot;:112,&quot;b&quot;:63,&quot;name&quot;:[]},{&quot;hex&quot;:&quot;6C5A3F&quot;,&quot;r&quot;:108,&quot;g&quot;:90,&quot;b&quot;:63,&quot;name&quot;:[]},{&quot;hex&quot;:&quot;5D4115&quot;,&quot;r&quot;:93,&quot;g&quot;:65,&quot;b&quot;:21,&quot;name&quot;:[]},{&quot;hex&quot;:&quot;C7A774&quot;,&quot;r&quot;:199,&quot;g&quot;:167,&quot;b&quot;:116,&quot;name&quot;:[]},{&quot;hex&quot;:&quot;C7B08A&quot;,&quot;r&quot;:199,&quot;g&quot;:176,&quot;b&quot;:138,&quot;name&quot;:[]}]},&quot;complement&quot;:{&quot;ttl&quot;:&quot;Complementary Color&quot;,&quot;col&quot;:[{&quot;hex&quot;:&quot;905C3F&quot;,&quot;r&quot;:144,&quot;g&quot;:92,&quot;b&quot;:63,&quot;name&quot;:[]},{&quot;hex&quot;:&quot;6C4F3F&quot;,&quot;r&quot;:108,&quot;g&quot;:79,&quot;b&quot;:63,&quot;name&quot;:[]},{&quot;hex&quot;:&quot;5D2F15&quot;,&quot;r&quot;:93,&quot;g&quot;:47,&quot;b&quot;:21,&quot;name&quot;:[]},{&quot;hex&quot;:&quot;C79274&quot;,&quot;r&quot;:199,&quot;g&quot;:146,&quot;b&quot;:116,&quot;name&quot;:[]},{&quot;hex&quot;:&quot;C7A08A&quot;,&quot;r&quot;:199,&quot;g&quot;:160,&quot;b&quot;:138,&quot;name&quot;:[]}]}}}" id="csd3-form-data" name="data" type="hidden"></form>
+
+	<form id="csd3-donate" action="https://www.paypal.com/cgi-bin/webscr" method="post">
+	<input name="cmd" value="_s-xclick" type="hidden">
+	<input name="hosted_button_id" value="3879757" type="hidden">
+	<input name="page_style" value="ColorSchemeDesigner" type="hidden">
+	<input src="Color%20Scheme%20Designer%203_files/e.png" class="btn" name="submit" alt="PayPal - The safer, easier way to pay online." border="0" type="image">
+	<img alt="" src="Color%20Scheme%20Designer%203_files/pixel.gif" height="1" border="0" width="1">
+	</form>
+
+	<div id="csd3-relatedlinks">
+		Related:
+
+<!-- Micfo -->
+		<a href="http://www.micfo.com/">Dedicated Server</a> |
+<!-- /2011-07-07 -->
+
+<!-- Vistaprint -->
+		<a href="http://www.vistaprint.com/logo-design/add-text.aspx">FREE Logo Design</a> |
+<!-- /2012-10-31 -->
+
+<!-- MagnetStreet -->
+		<a href="http://www.magnetstreet.com/wedding-invitations">Wedding Invitations</a> |
+		<a href="http://www.magnetstreet.com/wedding-save-the-dates">Save the Dates</a>
+<!-- /2012-10-19 -->
+
+	</div>
+
+
+<!-- Wix -->
+	<a id="csd3-shoplink2" href="http://www.wix.com/start/matrix?utm_campaign=ma_colorschemedesigner.com&amp;experiment_id=ma_colorschemedesigner.com"></a>
+<!-- /2012-03-03 -->
+
+<div style="display: none;" id="csd3-vision-warning" title="Vision simulation / color conversion active"></div></div>
+
+
+
+<script type="text/javascript">
+var gaJsHost = (("https:" == document.location.protocol) ? "https://ssl." : "http://www.");
+document.write(unescape("%3Cscript src='" + gaJsHost + "google-analytics.com/ga.js' type='text/javascript'%3E%3C/script%3E"));
+</script><script src="Color%20Scheme%20Designer%203_files/ga.js" type="text/javascript"></script>
+<script type="text/javascript">
+try {
+var pageTracker = _gat._getTracker("UA-1465350-3");
+pageTracker._trackPageview();
+} catch(err) {}
+</script>
+
+
+
+<div class="" style="display: none; top: 569px; left: 901px; right: auto;" id="csd3-tooltip"><h3 style="display: none;"></h3><div class="body">#905C3F</div><div style="display: none;" class="url"></div></div><div style="position: fixed; z-index: 998; width: 100%; height: 100%; top: 0px; left: 0px; background-color: rgb(0, 0, 0); opacity: 0.75;" id="floatbox-background"></div><div style="position: fixed; z-index: 999; width: 840px; margin-left: -420px; height: auto; top: 50%; left: 50%; background-color: transparent; margin-top: -326.5px;" role="alertdialog" id="floatbox-box"><div class="sample-info">Light page | <a href="#" id="link-sample2">Dark page</a> • Click inside the page to swap secondary colors</div><iframe src="Color%20Scheme%20Designer%203_files/index2.htm" class="sample" frameborder="0" scrolling="no"></iframe><button type="button" class="close-floatbox">Close</button></div></body></html>
