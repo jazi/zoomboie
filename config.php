@@ -19,7 +19,7 @@ define('TP_ROOT',		dirname(__FILE__) . '/');					// The root of installation
 //
 // Settings for this website (WS), used as default values in CHTMPLPage.php
 //
-define('WS_SITELINK',   '../zoomboie/');						// Link to site.
+define('WS_SITELINK',   '../zoomboie/');						// Link to site 3.
 define('WS_TITLE',      'zoomboie');  							// The H1 label of this site.
 define('WS_STYLESHEET', 'css/stylesheet_liquid.css');  			// Default stylesheet of the site.
 define('WS_FAVICON', 	'image/favicon.ico'); 					// Small icon to display in browser
