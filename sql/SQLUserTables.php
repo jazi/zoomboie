@@ -12,12 +12,22 @@ $tableGroup     		= DBT_Group;
 $tableGroupMember		= DBT_GroupMember;
 $tableArticle			= DBT_Article;
 $tableStatistics 		= DBT_Statistics;
+//Forum
+$tableTopics 			= DBT_Topics;
+$tablePosts 			= DBT_Posts;
 
-// Get Standard Procedure names
+//Standard Procedure names
 $spPDisplayArticle		= DBSP_PDisplayArticle;
 $spPListArticles 		= DBSP_PListArticles;
 $spPUpdateArticle		= DBSP_PUpdateArticle;
 $spPCreateNewArticle 	= DBSP_PCreateNewArticle;
+//Forum
+$spPSaveTopics = DBSP_PSaveTopics;
+$spPSavePost = DBSP_PSavePost;
+$spPViewPosts = DBSP_PViewPosts;
+$spPViewPost = DBSP_PViewPost;
+$spPViewTopic = DBSP_PViewTopic;
+$spPListTopics = DBSP_PListTopics;
   
 // Get User Defined Function names
 $udfFCheckUserIsOwnerOrAdmin = DBUDF_FCheckUserIsOwnerOrAdmin;
@@ -34,6 +44,8 @@ $query = <<<EOD
 	DROP TABLE IF EXISTS {$tableGroupMember};
 	DROP TABLE IF EXISTS {$tableArticle};
 	DROP TABLE IF EXISTS {$tableStatistics};
+	DROP TABLE IF EXISTS {$tableTopics};
+	DROP TABLE IF EXISTS {$tablePosts};
 --
 -- Table for the User
 --
@@ -78,7 +90,32 @@ $query = <<<EOD
 	FOREIGN KEY (GroupMember_idGroup) REFERENCES {$tableGroup}(idGroup),
 	PRIMARY KEY (GroupMember_idUser, GroupMember_idGroup)
 	) ENGINE = MYISAM CHARSET=utf8 COLLATE=utf8_general_ci;
-
+	
+--
+-- Forum, Table Topics
+--
+	CREATE TABLE {$tableTopics} (
+	idTopic INT AUTO_INCREMENT NOT NULL PRIMARY KEY, 
+	headlineTopic VARCHAR(100) NOT NULL, 
+	bodyTopic VARCHAR(1000) NOT NULL, 
+	dateTopic DATETIME NOT NULL, 
+	modifiedTopic DATETIME NULL, 
+	authorTopic INT NOT NULL, 
+	FOREIGN KEY (authorTopic) REFERENCES {$tableUser}(idUser)
+	) ENGINE=MYISAM CHARSET=utf8 COLLATE=utf8_general_ci;
+  
+-- Table for Posts
+	CREATE TABLE {$tablePosts} (
+	idPost INT AUTO_INCREMENT NOT NULL PRIMARY KEY, 
+	bodyPost VARCHAR(1000) NOT NULL, 
+	datePost DATETIME NOT NULL, 
+	modifiedPost DATETIME NULL, 
+	authorPost INT NOT NULL, 
+	postedInTopic INT NOT NULL, 
+	FOREIGN KEY (authorPost) REFERENCES {$tableUser}(idUser), 
+	FOREIGN KEY (postedInTopic) REFERENCES {$tableTopics}(idTopic)
+	) ENGINE=MYISAM CHARSET=utf8 COLLATE=utf8_general_ci;
+  
 --
 --
   
@@ -150,6 +187,21 @@ $query = <<<EOD
 	('Article 2', 'A Supreme Court (SC) appointee of President Aquino has recused herself from handling the petition impeachment trial.', '2012-02-14 20:14', 2),
 	('Article 3', '“Nanganak na... Wala akong kinalaman dyan, ha. (She just gave birth... I have nothing to do with it.)', '2012-02-14 19:58', 2),
 	('Article 4', '“På det hela taget känns denna struktur som en bra utbyggnad. Det ger möjlighet att enkelt integrera fler editorer utan att påverka pagecontrollers som använder dem.', '2012-02-17 07:58', 3);
+
+-- Forum
+--
+-- Create default threads for test.
+	INSERT INTO {$tableTopics} (headlineTopic, bodyTopic, dateTopic, modifiedTopic, authorTopic) VALUES 
+	("First Topic",  "Body of first topic", "2012-03-15 18:58", "2012-03-15 19:14", 1),
+	("Secound Topic", "Body of secound topic", "2012-03-15 19:25", "2012-03-15 19:33", 2),
+	("Third Topic",  "Body of third topic", "2012-03-15 19:19", "2012-03-15 19:45", 1);
+  
+  -- Create default posts for test.
+	INSERT INTO {$tablePosts} (bodyPost, datePost, authorPost, postedInTopic) VALUES 
+	("Post to the first topic of first post", "2012-03-15 19:23", 2, 1),
+	("Post to the first topic of secound post", "2012-03-15 19:55", 1, 1),
+	("Post to the third topic of first post", "2012-03-15 19:55", 2, 3);
+
   
 -- Stored Procedure to get a list
 -- 
@@ -248,6 +300,127 @@ $query = <<<EOD
 
     RETURN (isAdmin OR isOwner);
 	END;
+--
+-- FORUM
+-- Create a Stored Procedure to get a list of all Topics.
+--
+	DROP PROCEDURE IF EXISTS {$spPListTopics};
+	CREATE PROCEDURE {$spPListTopics}()
+	BEGIN
+	SELECT T.idTopic, T.headlineTopic, T.dateTopic, U.accountUser, COUNT(idPost) AS countPosts
+	FROM {$tableTopics} AS T 
+	INNER JOIN {$tableUser} AS U
+	ON T.authorTopic = U.idUser 
+	LEFT OUTER JOIN {$tablePosts} AS P 
+	ON T.idTopic = P.postedInTopic 
+	GROUP BY T.idTopic
+	ORDER BY T.modifiedTopic DESC;
+	END;
+  
+  -- Create a Stored Procedure to view a Topic.
+  --     
+	DROP PROCEDURE IF EXISTS {$spPViewTopic};
+	CREATE PROCEDURE {$spPViewTopic}
+	(
+    IN aTopic INT
+	)
+	BEGIN
+	SELECT T.headlineTopic, T.bodyTopic, T.dateTopic, T.modifiedTopic, T.authorTopic, U.accountUser 
+	FROM {$tableTopics} AS T
+	INNER JOIN {$tableUser} AS U
+	ON T.authorTopic = U.idUser
+	WHERE idTopic = aTopic;
+	END;
+  
+  
+  -- Create a Stored Procedure to view posts in a Topic.
+  --     
+	DROP PROCEDURE IF EXISTS {$spPViewPosts};
+	CREATE PROCEDURE {$spPViewPosts}
+	(
+    IN aTopic INT
+	)
+	BEGIN
+	SELECT P.idPost, P.bodyPost, P.datePost, P.modifiedPost, P.authorPost, U.accountUser 
+	FROM {$tablePosts} AS P
+	INNER JOIN {$tableUser} AS U
+	ON P.authorPost = U.idUser
+	WHERE postedInTopic = aTopic;
+	END;
+  
+  -- Create a Stored Procedure to view one post.
+  --     
+	DROP PROCEDURE IF EXISTS {$spPViewPost};
+	CREATE PROCEDURE {$spPViewPost}
+	(
+    IN aPost INT
+	)
+	BEGIN
+	SELECT idPost, bodyPost, authorPost, postedInTopic 
+	FROM {$tablePosts}
+	WHERE idPost = aPost;
+	END;
+  
+  
+  -- Create a Stored Procedure to save a post & mark the update of the topic.
+  --     
+	DROP PROCEDURE IF EXISTS {$spPSavePost};
+	CREATE PROCEDURE {$spPSavePost}
+	(
+	IN aId INT,
+    IN aBody VARCHAR(1000),
+    IN aAuthor INT,
+    IN aTopic INT
+	)
+	BEGIN
+	IF aId > 0 THEN
+    BEGIN
+		UPDATE {$tablePosts} SET  
+		bodyPost = aBody, 
+		modifiedPost = NOW() 
+		WHERE idPost = aId;
+    END;
+	ELSE
+    BEGIN
+		INSERT INTO {$tablePosts} 
+		(bodyPost, datePost, authorPost, postedInTopic) 
+		VALUES 
+		(aBody, NOW(), aAuthor, aTopic);
+    END;
+	END IF;
+    UPDATE {$tableTopics} SET
+		modifiedTopic = NOW() 
+		WHERE idTopic = aTopic;
+	END;
+  
+  -- Create a Stored Procedure to save a topic.
+  --     
+	DROP PROCEDURE IF EXISTS {$spPSaveTopics};
+	CREATE PROCEDURE {$spPSaveTopics}
+	(
+	IN aId INT,
+	IN aHeadline VARCHAR(100),
+	IN aBody VARCHAR(1000),
+	IN aAuthor INT
+	)
+	BEGIN
+	IF aId > 0 THEN
+    BEGIN
+		UPDATE {$tableTopics} SET 
+		headlineThread = aHeadline, 
+		bodyTopic = aBody, 
+		modifiedTopic = NOW() 
+		WHERE idTopic = aId;
+		END;
+	ELSE
+    BEGIN
+		INSERT INTO {$tableTopics} 
+		(headlineTopic, bodyTopic, dateTopic, modifiedTopic, authorTopic) 
+		VALUES 
+		(aHeadline, aBody, NOW(), NOW(), aAuthor);
+		END;
+	END IF;
+  END;
   
 EOD;
 ?>

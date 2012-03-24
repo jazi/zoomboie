@@ -57,7 +57,7 @@ class CInterceptionFilter {
 	public function UserIsSignedInOrRecirectToSignIn() {
 		
 		if(!isset($_SESSION['accountUser'])) { 
-			require(TP_PAGESPATH . 'login/PLogin.php');
+			require(TP_PAGESPATH . '/pages_login/PLogin.php');
 		}
 	}
 

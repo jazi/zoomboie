@@ -50,6 +50,16 @@ class CHTMLPage {
 		<link rel="shortcut icon" href="{$favicon}" />
 		<link rel="stylesheet" href="{$stylesheet}" />
 		<script src="http://html5shiv.googlecode.com/svn/trunk/html5.js"></script>
+    <script type="text/javascript" src="http://code.jquery.com/jquery-1.6.2.min.js"></script>
+    <script type="text/javascript" src="js/markitup/jquery.markitup.js"></script>
+    <script type="text/javascript" src="js/markitup/sets/default/set.js"></script>  <!--change default to html to get html setup -->
+    <link rel="stylesheet" type="text/css" href="js/markitup/skins/markitup/style.css" /> 
+    <link rel="stylesheet" type="text/css" href="js/markitup/sets/default/style.css" /> <!-- change default to html to get html setup -->
+    <script type="text/javascript" >
+      $(document).ready(function() {
+      $("textarea").markItUp(mySettings);
+      });
+	  </script>
 	</head>
 	<body>
 		<div id='wrap'>

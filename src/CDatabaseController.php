@@ -94,6 +94,7 @@ class CDatabaseController {
 	// Retrieve and ignore results from multiquery, count number of successful statements
 	// Some succeed and some fail, must count to really know.
 	//
+	/*
 	public function RetrieveAndIgnoreResultsFromMultiQuery() {
 
 		$mysqli = $this->iMysqli;
@@ -106,7 +107,19 @@ class CDatabaseController {
 
 		return $statements;
 	}
+	*/
+	 public function RetrieveAndIgnoreResultsFromMultiQuery() {
 
+        $mysqli = $this->iMysqli;
+        
+        $statements = 0;
+        do {
+            $res = $mysqli->store_result();
+            $statements++;
+        } while($mysqli->more_results() && $mysqli->next_result());
+
+        return $statements;
+    }
 
 	// ------------------------------------------------------------------------------------
 	//
